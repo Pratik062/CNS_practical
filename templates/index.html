@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phishing Site Detector</title>
+    <!-- Add Bootstrap CSS link here -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyE1CMAFSeF4g"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+      .header {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+      }
+      .footer {
+        background-color: #343a40;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+      .container {
+        margin-top: 70px;
+      }
+      .search-form {
+        text-align: center;
+      }
+      .search-input {
+        width: 70%;
+        padding: 10px;
+        font-size: 16px;
+      }
+      .btn-container {
+        text-align: center;
+        margin-top: 20px;
+      }
+      .search-btn,
+      .refresh-btn {
+        font-size: 16px;
+        width: 150px;
+      }
+      .search-btn {
+        background-color: #28a745;
+        color: #fff;
+      }
+      .refresh-btn {
+        background-color: #007bff;
+        color: #fff;
+        margin-left: 10px;
+      }
+      .result {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        color: black; /* Initial color while processing */
+      }
+      .benign {
+        color: #28a745;
+      }
+      .malicious {
+        color: #dc3545;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Phishing Site Detector</h1>
+    </div>
+
+    <div class="container mt-4">
+      <form method="POST" action="/predict" class="search-form">
+        <div class="form-group">
+          <input
+            type="text"
+            name="url"
+            id="url"
+            class="form-control search-input"
+            placeholder="Enter URL"
+            required
+          />
+        </div>
+        <div class="btn-container">
+          <button type="submit" class="btn btn-primary search-btn">
+            Predict
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary refresh-btn"
+            onclick="clearResult();"
+          >
+            Refresh
+          </button>
+        </div>
+      </form>
+
+      {% if prediction %}
+      <div
+        id="result"
+        class="result mt-3 {% if prediction == 'benign' %}benign{% else %}malicious{% endif %}"
+      >
+        <h4>Prediction Result:</h4>
+        <p class="lead">{{ prediction }}</p>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="footer">
+      <p>&copy; 2023 Phishing Site Detector</p>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js (optional) for Bootstrap features -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.9/dist/umd/popper.min.js"
+      integrity="sha384-eMNCOA8VApNj0weHmK07GzvIVbwAi4d7xqabZopXlOZd29jKMqXWwOzJH8W6iKva"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+WyE1CMAFSeF4g"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function clearResult() {
+        document.getElementById("result").innerHTML = "";
+      }
+    </script>
+  </body>
+</html>
